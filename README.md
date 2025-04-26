@@ -29,4 +29,5 @@ Dataset yang digunakan terdiri dari 3000 observasi dengan 6 fitur:
 | 4	| sunlight_hours |	Jumlah jam paparan sinar matahari per hari |
 | 5	| fertilizer_kg	| Jumlah pupuk yang digunakan dalam kilogram |
 | 6	| crop_yield |	Hasil panen (target yang ingin diprediksi) |
+
 Dataset ini bersih, tidak terdapat missing values.
