@@ -20,17 +20,18 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 
 from sklearn.linear_model import LinearRegression
-from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
-from sklearn.svm import SVR
-from sklearn.neighbors import KNeighborsRegressor
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.linear_model import Lasso, Ridge
 from xgboost import XGBRegressor
-from sklearn.ensemble import AdaBoostRegressor
 
 from sklearn.metrics import mean_squared_error, r2_score
 
-"""# Dataset Loading"""
+"""Pada tahap ini, Anda perlu diimpor beberapa pustaka (library) Python yang dibutuhkan untuk analisis data dan pembangunan model machine learning.
+
+# Dataset Loading
+
+Tahap selanjutnya adalah memuat dataset ke dalam notebook. Adapun dataset yang akan digunakan pada proyek kali ini adalah dataset hasil panen pertanian. Dataset diambil dari sumber yang sudah ada pada Kaggle. Pertama, mari kita mendownload dataset langsung dari Kaggle.
+"""
 
 !pip install -q kaggle
 !mkdir -p ~/.kaggle
@@ -38,31 +39,115 @@ from sklearn.metrics import mean_squared_error, r2_score
 !chmod 600 /root/.kaggle/kaggle.json
 !kaggle datasets download -d govindaramsriram/crop-yield-of-a-farm
 
+"""File yang didownload ternyata berbentuk file zip sehingga kita perlu melakukan ekstraksi file terlebih dahulu."""
+
 !unzip /content/crop-yield-of-a-farm.zip
+
+"""Kemudian kita muat file dataset berformat csv ke dalam dataframe pandas untuk pemrosesan yang lebih mudah."""
 
 df = pd.read_csv('/content/crop_yield_data.csv')
 df
 
 """# Exploratory Data Analysis (EDA)
 
+Di tahap ini, akan dilakukan Exploratory Data Analysis (EDA) untuk memahami karakteristik dataset. EDA bertujuan untuk:
+
+1. Memahami Struktur Data
+  - Tinjau jumlah baris dan kolom dalam dataset.
+  - Tinjau jenis data di setiap kolom (numerikal atau kategorikal).
+2. Menangani Data yang Hilang
+  - Identifikasi dan analisis data yang hilang (missing values). Tentukan langkah-langkah yang diperlukan untuk menangani data yang hilang, seperti pengisian atau penghapusan data tersebut.
+3. Analisis Distribusi dan Korelasi
+  - Analisis distribusi variabel numerik dengan statistik deskriptif dan visualisasi seperti histogram atau boxplot.
+  - Periksa hubungan antara variabel menggunakan matriks korelasi atau scatter plot.
+4. Visualisasi Data
+  - Buat visualisasi dasar seperti grafik distribusi dan diagram batang untuk variabel kategorikal.
+  - Gunakan heatmap atau pairplot untuk menganalisis korelasi antar variabel.
+  
+Tujuan dari EDA adalah untuk memperoleh wawasan awal yang mendalam mengenai data dan menentukan langkah selanjutnya dalam analisis atau pemodelan.
+
 ## Analisis Deskriptif
 """
 
 df.info()
 
+"""Dataset memiliki baris data sebanyak 3000 dan 6 kolom fitur. Dari hasil output df.info(), kita dapat melihat detail dari setiap atribut/kolom sebagai berikut:
+1. rainfall_mm: Jumlah rata-rata curah hujan (dalam milimeter) selama musim tanam. (Kisaran: 500 mm hingga 2000 mm)
+2. soil_quality_index: Peringkat numerik kualitas tanah, dengan skala dari 1 (buruk) hingga 10 (sangat baik). (Rentang: 1 hingga 10)
+3. farm_size_hectares: Ukuran kebun dalam hektar. (Kisaran: 10 hingga 1000 hektar)
+4. sunlight_hours: Rata-rata jam sinar matahari harian selama musim tanam. (Kisaran: 4 hingga 12 jam per hari)
+5. fertilizer_kg: Jumlah pupuk yang digunakan per hektar (dalam kilogram). (Kisaran: 100 hingga 3000 kg/hektar)
+6. crop_yield: variabel target yang merepresentasikan prediksi hasil panen dalam ton per hektar, dihitung menggunakan persamaan linier berdasarkan fitur-fitur di atas.
+"""
+
 df.describe()
+
+"""Berdasarkan hasil statistik deskriptif yang ditampilkan, terdapat beberapa informasi penting yang dapat diambil mengenai kolom-kolom dalam dataset:
+1. Rainfall (mm):
+  - Sebaran curah hujan terlihat cukup merata di sepanjang rentang nilai dari sekitar 500 mm hingga 2000 mm dengan rata-rata 1263,09 mm.
+  - Sebagian besar curah hujan berada dalam rentang 896 mm hingga 1636 mm (kuartil ke-1 hingga kuartil ke-3).
+2. Soil Quality Index:
+  - Indeks kualitas tanah menunjukkan sebaran kategori dari angka 1 hingga 10.
+  - Sebagian besar besar indeks kualitas tanah berkisar antara 3 hingga 8.
+3. Farm Size (hectares):
+  - Ukuran lahan pertanian juga bervariasi dari sekitar 10 hingga 1000 hektar dengan rata-rata 498.80 hektar.
+  - Sebagian besar ukuran lahan pertanian berada pada rentang 242 hingga 741 hektar.
+4. Sunlight Hours:
+  - Jumlah jam sinar matahari bervariasi dari 4 hingga 12 jam dengan rata-rata 7,99 jam.
+  - Sebagian besar papan sinar matahari berada pada rentang 6 hingga 10 jam.
+5. Fertilizer (kg):
+  - Jumlah pupuk yang digunakan memiliki sebaran dari 100 hingga 3000 kg dengan rata-rata 1549.45 kg.
+  - Sebagian besar jumlah pupuk yang digunakan berada pada rentang 869,75 hingga 2225 kg.
+6. Crop Yield:
+  - Hasil panen (crop yield) menunjukkan sebaran yang cenderung unimodal (memiliki satu puncak utama) di sekitar nilai 46 hingga 628 ton dengan rata-rata 328,1 ton.
+  - Sebagian besar data hasil panen terkonsentrasi di rentang antara sekitar 199 hingga 455 ton.
+"""
 
 df.isna().sum()
 
+"""Dataset tidak memiliki missing value pada berbagai fitur."""
+
 df.duplicated().sum()
 
-"""## Univariate Analysis"""
+"""Dataset juga tidak memiliki data yang duplikat. Oleh karena itu, yang perlu yang perlu dilakukan pada tahap cleaning adalah feature scaling untuk menyamakan rentang antar variabel selain target.
+
+## Univariate Analysis
+"""
 
 df.hist(bins=30, figsize=(12, 10))
 plt.tight_layout()
 plt.show()
 
-"""## Bivariate Analysis"""
+"""Berdasarkan histogram dari berbagai fitur dan target variabel, berikut adalah deskripsi mengenai sebaran datanya:
+1. Rainfall (mm):
+  - Sebaran curah hujan terlihat cukup merata di sepanjang rentang nilai dari sekitar 500 mm hingga 2000 mm.
+  - Tidak terlihat adanya puncak (mode) yang sangat dominan, melainkan frekuensi yang relatif serupa di berbagai interval curah hujan.
+2. Soil Quality Index:
+  - Indeks kualitas tanah menunjukkan sebaran yang diskrit dan terkumpul pada nilai-nilai integer dari 1 hingga 10.
+  - Terlihat adanya frekuensi yang bervariasi antar indeks kualitas tanah. Beberapa nilai seperti 2, 5, dan 8 memiliki frekuensi yang lebih tinggi dibandingkan nilai lainnya.
+3. Farm Size (hectares):
+  - Ukuran lahan pertanian juga menunjukkan sebaran yang relatif merata dari sekitar 10 hingga 1000 hektar.
+  - Mirip dengan curah hujan, tidak ada satu ukuran lahan yang secara signifikan lebih dominan dibandingkan yang lain.
+4. Sunlight Hours:
+  - Jumlah jam sinar matahari menunjukkan sebaran yang diskrit dan terbatas pada nilai-nilai integer dari 4 hingga 12, yang kemungkinan merepresentasikan bulan dalam setahun atau kategori durasi sinar matahari.
+  - Terdapat variasi frekuensi antar jumlah jam sinar matahari, dengan beberapa nilai seperti 6 dan 9 memiliki frekuensi yang lebih tinggi.
+5. Fertilizer (kg):
+  - Jumlah pupuk yang digunakan memiliki sebaran yang cukup luas dari 100 hingga 3000 kg.
+  - Terlihat adanya beberapa puncak frekuensi di sekitar nilai 500, 1500, dan 2500 kg, namun secara keseluruhan sebarannya cukup bervariasi.
+6. Crop Yield:
+  - Hasil panen (crop yield) menunjukkan sebaran yang cenderung unimodal (memiliki satu puncak utama) di sekitar nilai 300 hingga 400.
+  - Sebagian besar data hasil panen terkonsentrasi di rentang antara sekitar 100 hingga 600.
+"""
+
+plt.figure(figsize=(10, 6))
+sns.boxplot(data=df)
+plt.xticks(rotation=45, ha='right')
+plt.show()
+
+"""Dataset memiliki distribusi yang cukup simetris sehingga tidak mengandung outlier.
+
+## Bivariate Analysis
+"""
 
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -86,7 +171,12 @@ if len(features) < len(axs):
 plt.tight_layout()
 plt.show()
 
-"""## Multivariate Analysis"""
+"""Scatter plot di atas memvisualisasikan korelasi antara berbagai fitur dan hasil panen.
+- Curah Hujan (Rainfall): Sebaran titik-titik terlihat acak, mengindikasikan korelasi linear yang lemah dengan hasil panen.
+- Kualitas Tanah (Soil Quality) dan Jam Sinar Matahari (Sunlight Hours): Kedua fitur ini menunjukkan sebaran data per kategori yang cenderung acak terhadap hasil panen.
+- Pupuk (Fertilizer): Terdapat tren positif yang menunjukkan bahwa hasil panen cenderung meningkat seiring dengan peningkatan penggunaan pupuk, meskipun hubungannya tampak tidak sepenuhnya linear.
+- Ukuran Lahan (Farm Size): Menunjukkan tren positif yang mendekati linear, mengindikasikan bahwa hasil panen cenderung meningkat seiring dengan bertambahnya ukuran lahan.
+"""
 
 # Heatmap korelasi semua variabel
 plt.figure(figsize=(10, 8))
@@ -99,16 +189,41 @@ correlations = df.corr()['crop_yield'].sort_values(ascending=False)
 print("\nKorelasi fitur terhadap crop_yield:")
 print(correlations)
 
-"""# Data Preprocessing"""
+"""Matriks korelasi menunjukkan farm_size_hectares memiliki korelasi positif yang paling tinggi dengan crop_yield yaitu 0,98. Sedangkan fitur lainnya memiliki korelasi yang sangat lemah.
+
+# Data Preprocessing
+
+Pada tahap ini, data preprocessing adalah langkah penting untuk memastikan kualitas data sebelum digunakan dalam model machine learning.
+
+Sebelum melangkah lebih jauh, penting untuk dicatat bahwa dataset yang kita gunakan saat ini tergolong cukup bersih. Berdasarkan analisis awal, kita tidak menemukan adanya:
+- Missing Value: Tidak ada nilai yang hilang dalam dataset.
+- Data Duplikat: Tidak ada baris data yang identik.
+- Outlier Signifikan: Tidak terdapat nilai-nilai ekstrem yang perlu penanganan khusus.
+- Fitur Kategorikal: Semua fitur dalam dataset bersifat numerik, sehingga tidak memerlukan encoding.
+
+Dengan demikian, tahapan preprocessing yang akan kita lakukan adalah pembagian dataset dan normalisasi fitur.
+
+1. Pembagian Dataset (Train Test Split)
+
+Langkah pertama adalah mendefinisikan mana yang menjadi fitur (variabel independen) dan mana yang menjadi target (variabel dependen yang ingin kita prediksi). Dalam kasus ini, kolom 'crop_yield' adalah target kita.
+"""
 
 X = df.drop(columns=['crop_yield'])
 y = df['crop_yield']
+
+"""Untuk mengevaluasi performa model secara objektif, kita perlu membagi dataset menjadi dua bagian: set pelatihan (training set) yang digunakan untuk melatih model, dan set pengujian (testing set) yang digunakan untuk menguji performa model pada data yang belum pernah dilihat sebelumnya."""
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 print(f'Total seluruh sampel pada dataset: {len(X)}')
 print(f'Total sampel train dataset: {len(X_train)}')
 print(f'Total sampel in test dataset: {len(X_test)}')
+
+"""2. Normalisasi Fitur Menggunakan StandardScaler
+
+Fitur-fitur dalam dataset mungkin memiliki skala yang berbeda. Algoritma machine learning tertentu dapat bekerja lebih baik jika fitur-fitur dinormalisasi ke skala yang serupa. Kita akan menggunakan StandardScaler untuk melakukan standardisasi, yaitu menghilangkan rata-rata dan menskalakan ke varians unit.
+
+"""
 
 # Buat scaler
 scaler = StandardScaler()
@@ -119,7 +234,14 @@ X_train_scaled = scaler.fit_transform(X_train)
 # Transform X_test pakai scaler yang sama
 X_test_scaled = scaler.transform(X_test)
 
-"""# Model Development"""
+"""# Model Development
+
+Tahap terakhir adalah melatih dan mengevaluasi performa dari lima algoritma regresi yang berbeda pada data kita yang telah dibagi menjadi set pelatihan dan pengujian. Kita akan menggunakan Pipeline dari scikit-learn untuk menyederhanakan proses ini, meskipun dalam kasus ini kita tidak menyertakan scaler dalam pipeline (ini mungkin menjadi pertimbangan untuk eksperimen selanjutnya).
+
+Kita mendefinisikan sebuah dictionary bernama pipelines yang berisi nama-nama model regresi sebagai keys dan objek Pipeline sebagai values. Setiap Pipeline saat ini hanya terdiri dari satu langkah, yaitu model regresi itu sendiri.
+
+Selanjutnya, kita akan melakukan iterasi melalui setiap model dalam dictionary pipelines, melatihnya menggunakan data pelatihan (X_train, y_train), membuat prediksi pada data pelatihan dan pengujian (X_test, y_test), dan mengevaluasi performanya menggunakan metrik Mean Squared Error (MSE) dan R-squared (R2).
+"""
 
 # Definisikan 5 pipeline model tanpa scaler
 pipelines = {
@@ -170,6 +292,18 @@ for name, pipeline in pipelines.items():
 # Tampilkan hasil
 results_df = pd.DataFrame(results).T
 print(results_df)
+
+"""Berdasarkan hasil evaluasi menggunakan MSE dan R2, berikut adalah interpretasi yang dapat diambil.
+- Linear Regression dan Ridge Regression menunjukkan performa yang sangat baik dan serupa pada kedua set data, dengan MSE yang sangat rendah (mendekati 0) dan R2 yang sangat tinggi (mendekati 1). Ini mengindikasikan bahwa model-model ini sangat baik dalam memprediksi target dan tidak menunjukkan tanda-tanda overfitting. Regularisasi L2 pada Ridge Regression tampaknya tidak memberikan perbedaan signifikan dibandingkan Linear Regression pada dataset ini.
+
+- Decision Tree mencapai performa sempurna pada data pelatihan (MSE 0, R2 1), namun performanya menurun drastis pada data pengujian (MSE tinggi, R2 jauh lebih rendah). Ini adalah indikasi kuat terjadinya overfitting, di mana model terlalu kompleks dan mempelajari noise dalam data pelatihan sehingga gagal melakukan generalisasi dengan baik pada data baru.
+
+- XGBoost menunjukkan performa yang sangat baik pada kedua set data, dengan MSE yang rendah dan R2 yang tinggi. Meskipun tidak sesempurna Decision Tree pada data pelatihan, performanya jauh lebih baik dan lebih stabil pada data pengujian, menunjukkan kemampuan generalisasi yang baik.
+
+- Lasso Regression juga menunjukkan performa yang sangat baik dan stabil antara data pelatihan dan pengujian, dengan MSE yang rendah dan R2 yang sangat tinggi, meskipun sedikit lebih buruk dibandingkan Linear Regression dan Ridge Regression. Regularisasi L1 pada Lasso mungkin melakukan sedikit seleksi fitur, namun dampaknya tidak terlalu besar pada performa keseluruhan dalam kasus ini.
+
+Secara keseluruhan, Linear Regression, Ridge Regression, dan XGBoost menunjukkan performa yang baik dalam melakukan prediksi pada data yang belum dilihat. Decision Tree mengalami overfitting yang signifikan, sedangkan Lasso Regression juga bekerja dengan baik namun sedikit di bawah performa dua model linear pertama.
+"""
 
 # Reset index
 results_df_reset = results_df.reset_index().rename(columns={'index': 'Model'})
