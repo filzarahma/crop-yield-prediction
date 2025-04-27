@@ -96,12 +96,12 @@ Setiap model dibangun menggunakan pipeline yang berisi satu langkah, yaitu algor
 
 $$
 MSE = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2
-$$
 
 Where:
 - \( y_i \) is the actual value.
 - \( \hat{y}_i \) is the predicted value.
 - \( n \) is the number of data points.
+$$
 
 Mengukur rata-rata kuadrat error. Semakin kecil MSE, semakin baik model.
 
@@ -109,12 +109,14 @@ Mengukur rata-rata kuadrat error. Semakin kecil MSE, semakin baik model.
   
 $$
 R^2 = 1 - \frac{\sum_{i=1}^{n} (y_i - \hat{y}_i)^2}{\sum_{i=1}^{n} (y_i - \bar{y})^2}
-$$
+
 
 Where:
 - \( y_i \) is the actual value.
 - \( \hat{y}_i \) is the predicted value.
 - \( \bar{y} \) is the mean of the actual values.
+
+$$
 
 Mengukur seberapa besar variasi target yang dapat dijelaskan oleh model. Nilai R² mendekati 1 menunjukkan model sangat baik.
 
