@@ -1,7 +1,6 @@
 # Laporan Proyek Machine Learning - Filza Rahma Muflihah
 
 ## Daftar Isi
-  * [Daftar Isi](#daftar-isi)
   * [Domain Proyek](#domain-proyek)
   * [Business Understanding](#business-understanding)
     + [Problem Statements](#problem-statements)
