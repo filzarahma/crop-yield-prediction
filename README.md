@@ -5,21 +5,37 @@ Pertanian adalah sektor vital dalam penyediaan pangan dan penghidupan masyarakat
 
 **Mengapa masalah ini penting?**
 - Membantu petani mengoptimalkan penggunaan sumber daya (air, pupuk, lahan).
+- Mengurangi risiko gagal panen.
 - Membantu pemerintah dalam membuat kebijakan pangan berbasis data.
 - Mengurangi ketidakpastian hasil pertanian.
 
+**Bagaimana masalah ini diselesaikan?**
+Dengan membangun model regresi berbasis machine learning untuk memprediksi hasil panen berdasarkan atribut lingkungan.
+
+**Penelitian Terkait:**
+Studi oleh [Kang et al. (2020)](https://iopscience.iop.org/article/10.1088/1748-9326/ab7df9/meta) menunjukkan bahwa penggunaan banyak variabel lingkungan (cuaca, satelit, tanah, fenologi) bersama dengan algoritma machine learning canggih seperti XGBoost mampu meningkatkan akurasi prediksi hasil panen hingga 5% dibandingkan baseline model. Mereka juga menemukan bahwa XGBoost mengungguli model lain (termasuk deep learning seperti LSTM dan CNN) dalam hal akurasi dan stabilitas untuk prediksi hasil jagung di Midwest Amerika Serikat.
+
 ## Business Understanding
+
 ### Problem Statements
-- Bagaimana memprediksi hasil panen (crop yield) berdasarkan data cuaca, kondisi tanah, ukuran lahan, paparan sinar matahari, dan penggunaan pupuk?
-- Seberapa besar akurasi model regresi sederhana seperti Linear Regression dalam memprediksi crop yield?
+- Bagaimana memprediksi hasil panen berdasarkan faktor-faktor seperti curah hujan, kualitas tanah, ukuran lahan, intensitas sinar matahari, dan jumlah pupuk?
+- Algoritma machine learning apa yang paling efektif dalam memprediksi hasil panen di dataset ini?
+
+### Goals
+- Mengembangkan model regresi untuk memprediksi hasil panen dengan error seminimal mungkin.
+- Membandingkan performa beberapa model regresi berdasarkan metrik MSE dan R².
 
 ### Solution Statements
-- Melakukan eksperimen untuk model prediksi dengan menggunakan Linear Regression, Decission Tree, XGBoost, Lasso Regression, Ridge Regression.
-- Melakukan data scaling untuk meningkatkan performa model.
-- Metrik evaluasi: Mean Squared Error (MSE) dan R2 Score.
+Solution: Membangun dan membandingkan model Linear Regression, Decision Tree, Ridge Regression, Lasso Regression, dan XGBoost.
+Evaluasi Solusi: Menggunakan metrik Mean Squared Error (MSE) dan R-squared (R²) untuk mengukur performa model.
 
 ## Data Understanding
-Dataset yang digunakan terdiri dari 3000 observasi dengan 6 fitur:
+### Informasi Dataset
+- Jumlah data: 3000 data.
+- Data kondisi: Tidak ada missing value, semua bertipe numerik (int64).
+- Sumber data: [Kaggle](https://www.kaggle.com/datasets/govindaramsriram/crop-yield-of-a-farm/data). 
+
+### Fitur Dataset
 
 | No	| Nama Fitur	| Deskripsi |
 | --- | ----------- | ----------|
@@ -30,4 +46,8 @@ Dataset yang digunakan terdiri dari 3000 observasi dengan 6 fitur:
 | 5	| fertilizer_kg	| Jumlah pupuk yang digunakan dalam kilogram |
 | 6	| crop_yield |	Hasil panen (target yang ingin diprediksi) |
 
-Dataset ini bersih, tidak terdapat missing values.
+### Exploratory Data Analysis
+![image](https://github.com/user-attachments/assets/f9e591dc-21f9-4082-846d-5d1afa07cb3d)
+
+
+
