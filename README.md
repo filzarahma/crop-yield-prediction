@@ -1,5 +1,31 @@
 # Laporan Proyek Machine Learning - Filza Rahma Muflihah
 
+## Daftar Isi
+  * [Daftar Isi](#daftar-isi)
+  * [Domain Proyek](#domain-proyek)
+  * [Business Understanding](#business-understanding)
+    + [Problem Statements](#problem-statements)
+    + [Goals](#goals)
+    + [Solution Statements](#solution-statements)
+  * [Data Understanding](#data-understanding)
+    + [Informasi Dataset](#informasi-dataset)
+    + [Fitur Dataset](#fitur-dataset)
+    + [Exploratory Data Analysis](#exploratory-data-analysis)
+      - [Analisis Univariat](#analisis-univariat)
+      - [Analisis Korelasi](#analisis-korelasi)
+  * [Data Preparation](#data-preparation)
+    + [Tahapan Data Preparation](#tahapan-data-preparation)
+    + [Alasan Tahapan](#alasan-tahapan)
+  * [Modeling](#modeling)
+    + [Model dan Parameter](#model-dan-parameter)
+    + [Tahapan Utama](#tahapan-utama)
+    + [Kelebihan dan Kekurangan Model](#kelebihan-dan-kekurangan-model)
+  * [Evaluation](#evaluation)
+    + [Metrik Evaluasi yang Digunakan](#metrik-evaluasi-yang-digunakan)
+    + [Hasil Evaluasi](#hasil-evaluasi)
+    + [Visualisasi Performa Model](#visualisasi-performa-model)
+  * [Kesimpulan](#kesimpulan)
+
 ## Domain Proyek
 Pertanian adalah sektor vital dalam penyediaan pangan dan penghidupan masyarakat. Salah satu tantangan utama dalam sektor ini adalah ketidakpastian hasil panen (crop yield), yang dipengaruhi oleh banyak faktor seperti curah hujan, kualitas tanah, ukuran lahan, intensitas sinar matahari, dan penggunaan pupuk. Dengan memanfaatkan machine learning, kita dapat membangun model prediktif untuk memperkirakan hasil panen berdasarkan faktor-faktor ini, sehingga membantu petani dan pengambil kebijakan dalam perencanaan dan pengelolaan pertanian yang lebih efektif.
 
