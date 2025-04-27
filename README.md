@@ -93,29 +93,25 @@ Setiap model dibangun menggunakan pipeline yang berisi satu langkah, yaitu algor
 ### Evaluation
 #### Metrik Evaluasi yang Digunakan
 - **Mean Squared Error (MSE):**
-  
-$$
-MSE = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2
-$$
 
-  $$
-   \text{MSE} = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2
-   \begin{itemize}
-       \item $y_i$: nilai sebenarnya ke-$i$
-       \item $\hat{y}_i$: nilai prediksi ke-$i$
-       \item $n$: jumlah total data
-   \end{itemize}
-  $$
+$$
+\text{MSE} = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2
+\begin{itemize}
+    \item $y_i$: nilai sebenarnya ke-$i$
+    \item $\hat{y}_i$: nilai prediksi ke-$i$
+    \item $n$: jumlah total data
+\end{itemize}
+$$
   
   Mengukur rata-rata kuadrat error. Semakin kecil MSE, semakin baik model.
 - **R-squared (R²):**
   
-  $$
-  R^2 = 1 - \frac{\text{SS}_{\text{res}}}{\text{SS}_{\text{tot}}}
- \begin{description}
-     \item[$\text{SS}_{\text{res}}$] Sum of Squares of Residuals
-     \item[$\text{SS}_{\text{tot}}$] Total Sum of Squares
- \end{description}
+$$
+R^2 = 1 - \frac{\text{SS}_{\text{res}}}{\text{SS}_{\text{tot}}}
+\begin{description}
+  \item[$\text{SS}_{\text{res}}$] Sum of Squares of Residuals
+  \item[$\text{SS}_{\text{tot}}$] Total Sum of Squares
+\end{description}
 $$
 
 Mengukur seberapa besar variasi target yang dapat dijelaskan oleh model. Nilai R² mendekati 1 menunjukkan model sangat baik.
