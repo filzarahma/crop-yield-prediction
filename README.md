@@ -69,6 +69,9 @@ Berdasarkan histogram dari berbagai fitur dan target variabel, berikut adalah de
 - Hasil panen (crop yield) menunjukkan sebaran yang cenderung unimodal (memiliki satu puncak utama) di sekitar nilai 300 hingga 400.
 - Sebagian besar data hasil panen terkonsentrasi di rentang antara sekitar 100 hingga 600.
 
+![image](https://github.com/user-attachments/assets/a4bd1273-2bbb-4cf6-99f6-95d0ab1ae058)
+Boxplot menunjukkan tidak ada outlier pada fitur dataset.
+
 #### Analisis Korelasi
 ![image](https://github.com/user-attachments/assets/af2ab444-d67a-4bb1-8cd5-6c1836c27859)
 ![image](https://github.com/user-attachments/assets/270a3494-2d04-4230-bc2e-1c5e22144888)
