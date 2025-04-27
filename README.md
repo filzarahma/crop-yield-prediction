@@ -93,35 +93,22 @@ Setiap model dibangun menggunakan pipeline yang berisi satu langkah, yaitu algor
 ### Evaluation
 #### Metrik Evaluasi yang Digunakan
 - **Mean Squared Error (MSE):**
-
-$$
-MSE = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2
-
-Where:
-- \( y_i \) is the actual value.
-- \( \hat{y}_i \) is the predicted value.
-- \( n \) is the number of data points.
-$$
-
+![image](https://github.com/user-attachments/assets/74e20a23-8cbb-4438-b732-d9e1d36b65fc)
 Mengukur rata-rata kuadrat error. Semakin kecil MSE, semakin baik model.
 
 - **R-squared (R²):**
-  
-$$
-R^2 = 1 - \frac{\sum_{i=1}^{n} (y_i - \hat{y}_i)^2}{\sum_{i=1}^{n} (y_i - \bar{y})^2}
-
-
-Where:
-- \( y_i \) is the actual value.
-- \( \hat{y}_i \) is the predicted value.
-- \( \bar{y} \) is the mean of the actual values.
-
-$$
-
+![image](https://github.com/user-attachments/assets/a803e3da-eee3-4be2-acb6-89de7be8b484)
 Mengukur seberapa besar variasi target yang dapat dijelaskan oleh model. Nilai R² mendekati 1 menunjukkan model sangat baik.
 
 #### Hasil Evaluasi
-
+|Model |Train | Test|	
+||MSE|R^2|	MSE|	R^2|
+|------|----------|----------|-----------|-----------|
+|Linear Regression|	0.085804|	0.999996|	0.081761|	0.999996|
+|Decision Tree|	0.000000|	1.000000|	137.530000|	0.993578|
+|XGBoost|	1.182992|	0.999943|	23.437340|	0.998906|
+|Lasso Regression|	0.269812|	0.999987|	0.261464|	0.999988|
+|Ridge Regression|	0.085804|	0.999996|	0.081751|	0.999996|
   
 
 
