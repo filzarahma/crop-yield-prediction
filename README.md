@@ -49,25 +49,43 @@ Evaluasi Solusi: Menggunakan metrik Mean Squared Error (MSE) dan R-squared (R²)
 ### Exploratory Data Analysis
 #### Analisis Univariat
 ![image](https://github.com/user-attachments/assets/f9e591dc-21f9-4082-846d-5d1afa07cb3d)
-
-#### Analisis Bivariat
-![image](https://github.com/user-attachments/assets/af2ab444-d67a-4bb1-8cd5-6c1836c27859)
+Berdasarkan histogram dari berbagai fitur dan target variabel, berikut adalah deskripsi mengenai sebaran datanya:
+1. Rainfall (mm):
+- Sebaran curah hujan terlihat cukup merata di sepanjang rentang nilai dari sekitar 500 mm hingga 2000 mm.
+- Tidak terlihat adanya puncak (mode) yang sangat dominan, melainkan frekuensi yang relatif serupa di berbagai interval curah hujan.
+2. Soil Quality Index:
+- Indeks kualitas tanah menunjukkan sebaran yang diskrit dan terkumpul pada nilai-nilai integer dari 1 hingga 10.
+- Terlihat adanya frekuensi yang bervariasi antar indeks kualitas tanah. Beberapa nilai seperti 2, 5, dan 8 memiliki frekuensi yang lebih tinggi dibandingkan nilai lainnya.
+3. Farm Size (hectares):
+- Ukuran lahan pertanian juga menunjukkan sebaran yang relatif merata dari sekitar 0 hingga 1000 hektar.
+- Mirip dengan curah hujan, tidak ada satu ukuran lahan yang secara signifikan lebih dominan dibandingkan yang lain.
+4. Sunlight Hours:
+- Jumlah jam sinar matahari menunjukkan sebaran yang diskrit dan terbatas pada nilai-nilai integer dari 4 hingga 12, yang kemungkinan merepresentasikan bulan dalam setahun atau kategori durasi sinar matahari.
+- Terdapat variasi frekuensi antar jumlah jam sinar matahari, dengan beberapa nilai seperti 6 dan 9 memiliki frekuensi yang lebih tinggi.
+5. Fertilizer (kg):
+- Jumlah pupuk yang digunakan memiliki sebaran yang cukup luas dari 0 hingga 3000 kg.
+- Terlihat adanya beberapa puncak frekuensi di sekitar nilai 500, 1500, dan 2500 kg, namun secara keseluruhan sebarannya cukup bervariasi.
+6. Crop Yield:
+- Hasil panen (crop yield) menunjukkan sebaran yang cenderung unimodal (memiliki satu puncak utama) di sekitar nilai 300 hingga 400.
+- Sebagian besar data hasil panen terkonsentrasi di rentang antara sekitar 100 hingga 600.
 
 #### Analisis Korelasi
+![image](https://github.com/user-attachments/assets/af2ab444-d67a-4bb1-8cd5-6c1836c27859)
 ![image](https://github.com/user-attachments/assets/270a3494-2d04-4230-bc2e-1c5e22144888)
+Ukuran lahan pertanian memiliki korelasi positif yang sangat tinggi berdasarkan scatter plot di atas. Semakin luas lahan pertanian semakin tinggi hasil panen yang didapatkan. Sedangkan fitur yang lain memiliki korelasi yang sangat lemah terhadap hasil panen.
 
-### Data Preparation
-#### Tahapan Data Preparation
+## Data Preparation
+### Tahapan Data Preparation
 - Memisahkan fitur (X) dan target (y).
 - Train-test split: 80% data untuk training, 20% untuk testing.
 - Melakukan feature scaling menggunakan StandardScaler.
 
-#### Alasan Tahapan
+### Alasan Tahapan
 - Membagi data diperlukan untuk menguji generalisasi model.
 - Feature scaling untuk melakukan normalisasi data agar data yang digunakan tidak memiliki sebaran (range) yang beragam.
 
-### Modeling
-#### Model dan Parameter
+## Modeling
+### Model dan Parameter
 Setiap model dibangun menggunakan pipeline yang berisi satu langkah, yaitu algoritma regresi itu sendiri. Berikut adalah parameter utama yang digunakan untuk setiap model:
 - **Linear Regression**: Tidak ada parameter khusus yang diatur dalam implementasi ini, menggunakan parameter default dari scikit-learn.
 - **Decision Tree**: Parameter `random_state=42` digunakan untuk memastikan hasil yang dapat direproduksi. Parameter lain menggunakan nilai default.
@@ -75,13 +93,13 @@ Setiap model dibangun menggunakan pipeline yang berisi satu langkah, yaitu algor
 - **Lasso Regression**: Parameter `alpha=1.0` adalah koefisien regularisasi L1. `random_state=42` digunakan untuk reproduktifitas.
 - **Ridge Regression**: Parameter `alpha=1.0` adalah koefisien regularisasi L2. `random_state=42` digunakan untuk reproduktifitas.
 
-#### Tahapan Utama 
+### Tahapan Utama 
 1. **Definisi Model**: Membuat instance dari setiap algoritma regresi dengan parameter yang telah ditentukan.
 2. **Pembentukan Pipeline**: Menggabungkan setiap model ke dalam pipeline scikit-learn. Meskipun dalam kasus ini hanya ada satu langkah (model), penggunaan pipeline adalah praktik yang baik untuk alur kerja yang lebih kompleks di masa depan.
 3. **Pelatihan Model**: Melatih setiap pipeline menggunakan data latih (train). Metode `fit()` digunakan untuk tujuan ini.
 4. **Evaluasi Model**: Mengevaluasi kinerja setiap model yang telah dilatih menggunakan data latih dan data uji (test). Metrik evaluasi yang digunakan adalah Mean Squared Error (MSE) dan R-squared (koefisien determinasi). Metode `predict()` digunakan untuk mendapatkan prediksi, dan kemudian metrik dihitung menggunakan fungsi-fungsi dari scikit-learn.
    
-#### Kelebihan dan Kekurangan Model
+### Kelebihan dan Kekurangan Model
 | Model | Kelebihan | Kekurangan |
 |-------|-----------|------------|
 |Linear Regression| Interpretatif, cepat.| Tidak bagus untuk hubungan non-linear, sensitif terhadap outlier.|
@@ -90,8 +108,8 @@ Setiap model dibangun menggunakan pipeline yang berisi satu langkah, yaitu algor
 |Lasso Regression|Seleksi fitur otomatis (regulasi L1).|Bisa mengabaikan fitur penting.|
 |Ridge Regression|Mengurangi overfitting (regulasi L2).|Sensitif terhadap korelasi antar fitur.|
 
-### Evaluation
-#### Metrik Evaluasi yang Digunakan
+## Evaluation
+### Metrik Evaluasi yang Digunakan
 - **Mean Squared Error (MSE):**
 ![image](https://github.com/user-attachments/assets/74e20a23-8cbb-4438-b732-d9e1d36b65fc)
 Mengukur rata-rata kuadrat error. Semakin kecil MSE, semakin baik model.
@@ -100,7 +118,7 @@ Mengukur rata-rata kuadrat error. Semakin kecil MSE, semakin baik model.
 ![image](https://github.com/user-attachments/assets/a803e3da-eee3-4be2-acb6-89de7be8b484)
 Mengukur seberapa besar variasi target yang dapat dijelaskan oleh model. Nilai R² mendekati 1 menunjukkan model sangat baik.
 
-#### Hasil Evaluasi
+### Hasil Evaluasi
 | Model              | Train MSE  | Train R²  | Test MSE   | Test R²   |
 |--------------------|------------|-----------|------------|-----------|
 | Linear Regression  | 0.085804   | 0.999996  | 0.081761   | 0.999996  |
@@ -109,10 +127,10 @@ Mengukur seberapa besar variasi target yang dapat dijelaskan oleh model. Nilai R
 | Lasso Regression   | 0.269812   | 0.999987  | 0.261464   | 0.999988  |
 | Ridge Regression   | 0.085804   | 0.999996  | 0.081751   | 0.999996  |
 
-#### Visualisasi Performa Model
+### Visualisasi Performa Model
 ![image](https://github.com/user-attachments/assets/a3102f85-3b53-4a62-b37c-997317935dce)
 
-### Kesimpulan
+## Kesimpulan
 Berdasarkan hasil pemodelan dengan berbagai algoritma machine learning, dapat disimpulkan bahwa faktor-faktor seperti curah hujan, kualitas tanah, ukuran lahan, intensitas sinar matahari, dan jumlah pupuk memiliki hubungan yang sangat kuat dengan hasil panen. Hal ini ditunjukkan oleh nilai R-squared yang sangat tinggi pada data latih dan uji untuk beberapa model, yang mendekati 1. Nilai R-squared yang tinggi mengindikasikan bahwa sebagian besar variabilitas dalam hasil panen dapat dijelaskan oleh fitur-fitur input tersebut.
 
 Mengenai algoritma machine learning yang paling efektif dalam memprediksi hasil panen pada dataset ini, Linear Regression dan Ridge Regression menunjukkan kinerja terbaik dan hampir identik. Kedua model ini menghasilkan nilai Mean Squared Error (MSE) yang sangat rendah (sekitar 0.08 pada data uji) dan nilai R-squared yang sangat tinggi (0.999996 pada data uji). Ini menunjukkan bahwa kedua model ini mampu memprediksi hasil panen dengan akurasi yang sangat tinggi dan memiliki kemampuan generalisasi yang baik terhadap data yang belum pernah dilihat.
