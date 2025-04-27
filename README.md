@@ -69,21 +69,48 @@ Evaluasi Solusi: Menggunakan metrik Mean Squared Error (MSE) dan R-squared (R²)
 ### Modeling
 #### Model dan Parameter
 Setiap model dibangun menggunakan pipeline yang berisi satu langkah, yaitu algoritma regresi itu sendiri. Berikut adalah parameter utama yang digunakan untuk setiap model:
-- Linear Regression: Tidak ada parameter khusus yang diatur dalam implementasi ini, menggunakan parameter default dari scikit-learn.
-- Decision Tree: Parameter random_state=42 digunakan untuk memastikan hasil yang dapat direproduksi. Parameter lain menggunakan nilai default.
-- XGBoost: Parameter n_estimators=100 mengatur jumlah pohon yang dibangun, random_state=42 untuk reproduktifitas, dan verbosity=0 untuk mengurangi keluaran verbose.
-- Lasso Regression: Parameter alpha=1.0 adalah koefisien regularisasi L1. random_state=42 digunakan untuk reproduktifitas.
-- Ridge Regression: Parameter alpha=1.0 adalah koefisien regularisasi L2. random_state=42 digunakan untuk reproduktifitas.
+- **Linear Regression**: Tidak ada parameter khusus yang diatur dalam implementasi ini, menggunakan parameter default dari scikit-learn.
+- **Decision Tree**: Parameter `random_state=42` digunakan untuk memastikan hasil yang dapat direproduksi. Parameter lain menggunakan nilai default.
+- **XGBoost**: Parameter `n_estimators=100` mengatur jumlah pohon yang dibangun, `random_state=42` untuk reproduktifitas, dan `verbosity=0` untuk mengurangi keluaran verbose.
+- **Lasso Regression**: Parameter `alpha=1.0` adalah koefisien regularisasi L1. `random_state=42` digunakan untuk reproduktifitas.
+- **Ridge Regression**: Parameter `alpha=1.0` adalah koefisien regularisasi L2. `random_state=42` digunakan untuk reproduktifitas.
 
 #### Tahapan Utama 
-1. Definisi Model: Membuat instance dari setiap algoritma regresi dengan parameter yang telah ditentukan.
-2. Pembentukan Pipeline: Menggabungkan setiap model ke dalam pipeline scikit-learn. Meskipun dalam kasus ini hanya ada satu langkah (model), penggunaan pipeline adalah praktik yang baik untuk alur kerja yang lebih kompleks di masa depan (misalnya, menambahkan scaling atau transformasi fitur).
-3. Pelatihan Model: Melatih setiap pipeline menggunakan data latih (train). Metode `fit()` digunakan untuk tujuan ini.
-4. Evaluasi Model: Mengevaluasi kinerja setiap model yang telah dilatih menggunakan data latih dan data uji (test). Metrik evaluasi yang digunakan adalah Mean Squared Error (MSE) dan R-squared (koefisien determinasi). Metode `predict()` digunakan untuk mendapatkan prediksi, dan kemudian metrik dihitung menggunakan fungsi-fungsi dari scikit-learn.
+1. **Definisi Model**: Membuat instance dari setiap algoritma regresi dengan parameter yang telah ditentukan.
+2. **Pembentukan Pipeline**: Menggabungkan setiap model ke dalam pipeline scikit-learn. Meskipun dalam kasus ini hanya ada satu langkah (model), penggunaan pipeline adalah praktik yang baik untuk alur kerja yang lebih kompleks di masa depan.
+3. **Pelatihan Model**: Melatih setiap pipeline menggunakan data latih (train). Metode `fit()` digunakan untuk tujuan ini.
+4. **Evaluasi Model**: Mengevaluasi kinerja setiap model yang telah dilatih menggunakan data latih dan data uji (test). Metrik evaluasi yang digunakan adalah Mean Squared Error (MSE) dan R-squared (koefisien determinasi). Metode `predict()` digunakan untuk mendapatkan prediksi, dan kemudian metrik dihitung menggunakan fungsi-fungsi dari scikit-learn.
    
 #### Kelebihan dan Kekurangan Model
+| Model | Kelebihan | Kekurangan |
+|-------|-----------|------------|
+|Linear Regression| Interpretatif, cepat.| Tidak bagus untuk hubungan non-linear, sensitif terhadap outlier.|
+|Decision Tree|Menangani non-linearitas, interpretatif.|Overfitting pada data kecil.|
+|XGBoost|Akurasi tinggi, menangani missing value.|Kompleksitas tinggi, tuning sulit.|
+|Lasso Regression|Seleksi fitur otomatis (regulasi L1).|Bisa mengabaikan fitur penting.|
+|Ridge Regression|Mengurangi overfitting (regulasi L2).|Sensitif terhadap korelasi antar fitur.|
 
+### Evaluation
+#### Metrik Evaluasi yang Digunakan
+- **Mean Squared Error (MSE):**
+   \text{MSE} = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2
+   \begin{itemize}
+       \item $y_i$: nilai sebenarnya ke-$i$
+       \item $\hat{y}_i$: nilai prediksi ke-$i$
+       \item $n$: jumlah total data
+   \end{itemize}
+  Mengukur rata-rata kuadrat error. Semakin kecil MSE, semakin baik model.
+- **R-squared (R²):**
+  R^2 = 1 - \frac{\text{SS}_{\text{res}}}{\text{SS}_{\text{tot}}}
+ \begin{description}
+     \item[$\text{SS}_{\text{res}}$] Sum of Squares of Residuals
+     \item[$\text{SS}_{\text{tot}}$] Total Sum of Squares
+ \end{description}
+Mengukur seberapa besar variasi target yang dapat dijelaskan oleh model. Nilai R² mendekati 1 menunjukkan model sangat baik.
 
+#### Hasil Evaluasi
+
+  
 
 
 
