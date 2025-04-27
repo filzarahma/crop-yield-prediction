@@ -93,7 +93,9 @@ Setiap model dibangun menggunakan pipeline yang berisi satu langkah, yaitu algor
 ### Evaluation
 #### Metrik Evaluasi yang Digunakan
 - **Mean Squared Error (MSE):**
-  
+  MSE = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2
+
+
   $$
    \text{MSE} = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2
    \begin{itemize}
@@ -115,17 +117,6 @@ Setiap model dibangun menggunakan pipeline yang berisi satu langkah, yaitu algor
 $$
 
 Mengukur seberapa besar variasi target yang dapat dijelaskan oleh model. Nilai R² mendekati 1 menunjukkan model sangat baik.
-
-
-**Mean Squared Error (MSE):**
-$$
-\text{MSE} = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2
-$$
-
-**R-squared ($R^2$):**
-$$
-R^2 = 1 - \frac{\text{SS}_{\text{res}}}{\text{SS}_{\text{tot}}} = 1 - \frac{\sum_{i=1}^{n} (y_i - \hat{y}_i)^2}{\sum_{i=1}^{n} (y_i - \bar{y})^2}
-$$
 
 #### Hasil Evaluasi
 
