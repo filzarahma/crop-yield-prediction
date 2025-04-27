@@ -47,7 +47,46 @@ Evaluasi Solusi: Menggunakan metrik Mean Squared Error (MSE) dan R-squared (R²)
 | 6	| crop_yield |	Hasil panen (target yang ingin diprediksi) |
 
 ### Exploratory Data Analysis
+#### Analisis Univariat
 ![image](https://github.com/user-attachments/assets/f9e591dc-21f9-4082-846d-5d1afa07cb3d)
+
+#### Analisis Bivariat
+![image](https://github.com/user-attachments/assets/af2ab444-d67a-4bb1-8cd5-6c1836c27859)
+
+#### Analisis Korelasi
+![image](https://github.com/user-attachments/assets/270a3494-2d04-4230-bc2e-1c5e22144888)
+
+### Data Preparation
+#### Tahapan Data Preparation
+- Memisahkan fitur (X) dan target (y).
+- Train-test split: 80% data untuk training, 20% untuk testing.
+- Melakukan feature scaling menggunakan StandardScaler.
+
+#### Alasan Tahapan
+- Membagi data diperlukan untuk menguji generalisasi model.
+- Feature scaling untuk melakukan normalisasi data agar data yang digunakan tidak memiliki sebaran (range) yang beragam.
+
+### Modeling
+#### Model dan Parameter
+Setiap model dibangun menggunakan pipeline yang berisi satu langkah, yaitu algoritma regresi itu sendiri. Berikut adalah parameter utama yang digunakan untuk setiap model:
+- Linear Regression: Tidak ada parameter khusus yang diatur dalam implementasi ini, menggunakan parameter default dari scikit-learn.
+- Decision Tree: Parameter random_state=42 digunakan untuk memastikan hasil yang dapat direproduksi. Parameter lain menggunakan nilai default.
+- XGBoost: Parameter n_estimators=100 mengatur jumlah pohon yang dibangun, random_state=42 untuk reproduktifitas, dan verbosity=0 untuk mengurangi keluaran verbose.
+- Lasso Regression: Parameter alpha=1.0 adalah koefisien regularisasi L1. random_state=42 digunakan untuk reproduktifitas.
+- Ridge Regression: Parameter alpha=1.0 adalah koefisien regularisasi L2. random_state=42 digunakan untuk reproduktifitas.
+
+#### Tahapan Utama 
+1. Definisi Model: Membuat instance dari setiap algoritma regresi dengan parameter yang telah ditentukan.
+2. Pembentukan Pipeline: Menggabungkan setiap model ke dalam pipeline scikit-learn. Meskipun dalam kasus ini hanya ada satu langkah (model), penggunaan pipeline adalah praktik yang baik untuk alur kerja yang lebih kompleks di masa depan (misalnya, menambahkan scaling atau transformasi fitur).
+3. Pelatihan Model: Melatih setiap pipeline menggunakan data latih (train). Metode `fit()` digunakan untuk tujuan ini.
+4. Evaluasi Model: Mengevaluasi kinerja setiap model yang telah dilatih menggunakan data latih dan data uji (test). Metrik evaluasi yang digunakan adalah Mean Squared Error (MSE) dan R-squared (koefisien determinasi). Metode `predict()` digunakan untuk mendapatkan prediksi, dan kemudian metrik dihitung menggunakan fungsi-fungsi dari scikit-learn.
+   
+#### Kelebihan dan Kekurangan Model
+
+
+
+
+
 
 
 
