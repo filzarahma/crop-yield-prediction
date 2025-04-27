@@ -101,14 +101,26 @@ Mengukur rata-rata kuadrat error. Semakin kecil MSE, semakin baik model.
 Mengukur seberapa besar variasi target yang dapat dijelaskan oleh model. Nilai R² mendekati 1 menunjukkan model sangat baik.
 
 #### Hasil Evaluasi
-|Model |Train | Test|	
-||MSE|R^2|	MSE|	R^2|
-|------|----------|----------|-----------|-----------|
-|Linear Regression|	0.085804|	0.999996|	0.081761|	0.999996|
-|Decision Tree|	0.000000|	1.000000|	137.530000|	0.993578|
-|XGBoost|	1.182992|	0.999943|	23.437340|	0.998906|
-|Lasso Regression|	0.269812|	0.999987|	0.261464|	0.999988|
-|Ridge Regression|	0.085804|	0.999996|	0.081751|	0.999996|
+| Model              | Train MSE  | Train R²  | Test MSE   | Test R²   |
+|--------------------|------------|-----------|------------|-----------|
+| Linear Regression  | 0.085804   | 0.999996  | 0.081761   | 0.999996  |
+| Decision Tree      | 0.000000   | 1.000000  | 137.530000 | 0.993578  |
+| XGBoost            | 1.182992   | 0.999943  | 23.437340  | 0.998906  |
+| Lasso Regression   | 0.269812   | 0.999987  | 0.261464   | 0.999988  |
+| Ridge Regression   | 0.085804   | 0.999996  | 0.081751   | 0.999996  |
+
+#### Visualisasi Performa Model
+![image](https://github.com/user-attachments/assets/a3102f85-3b53-4a62-b37c-997317935dce)
+
+### Kesimpulan
+Berdasarkan hasil pemodelan dengan berbagai algoritma machine learning, dapat disimpulkan bahwa faktor-faktor seperti curah hujan, kualitas tanah, ukuran lahan, intensitas sinar matahari, dan jumlah pupuk memiliki hubungan yang sangat kuat dengan hasil panen. Hal ini ditunjukkan oleh nilai R-squared yang sangat tinggi pada data latih dan uji untuk beberapa model, yang mendekati 1. Nilai R-squared yang tinggi mengindikasikan bahwa sebagian besar variabilitas dalam hasil panen dapat dijelaskan oleh fitur-fitur input tersebut.
+
+Mengenai algoritma machine learning yang paling efektif dalam memprediksi hasil panen pada dataset ini, Linear Regression dan Ridge Regression menunjukkan kinerja terbaik dan hampir identik. Kedua model ini menghasilkan nilai Mean Squared Error (MSE) yang sangat rendah (sekitar 0.08 pada data uji) dan nilai R-squared yang sangat tinggi (0.999996 pada data uji). Ini menunjukkan bahwa kedua model ini mampu memprediksi hasil panen dengan akurasi yang sangat tinggi dan memiliki kemampuan generalisasi yang baik terhadap data yang belum pernah dilihat.
+
+Meskipun Lasso Regression juga menunjukkan kinerja yang baik dengan nilai MSE 0.261464 dan R-squared 0.999988 pada data uji, kinerjanya sedikit di bawah Linear Regression dan Ridge Regression. Sebaliknya, Decision Tree mengalami overfitting yang signifikan. Meskipun memiliki kinerja sempurna pada data latih (MSE 0 dan R-squared 1.0), kinerjanya jauh lebih buruk pada data uji (MSE 137.53 dan R-squared 0.993578). Hal ini mengindikasikan bahwa model Decision Tree terlalu kompleks dan menghafal pola pada data latih, sehingga tidak mampu menggeneralisasi dengan baik pada data baru. XGBoost menunjukkan kinerja yang cukup baik dengan MSE 23.437340 dan R-squared 0.998906 pada data uji, namun masih di bawah performa Linear Regression dan Ridge Regression dalam kasus ini.
+
+Oleh karena itu, dengan mempertimbangkan kinerja pada data uji (kemampuan generalisasi), Linear Regression dan Ridge Regression adalah algoritma yang paling efektif untuk memprediksi hasil panen berdasarkan faktor-faktor yang diberikan dalam dataset ini. Ridge Regression mungkin sedikit lebih unggul karena kemampuannya dalam menangani potensi multicollinearity antar fitur, meskipun dalam kasus ini dampaknya terlihat minimal berdasarkan hasil yang sangat serupa dengan Linear Regression.
+
   
 
 
